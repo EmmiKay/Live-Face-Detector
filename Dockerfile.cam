@@ -1,0 +1,13 @@
+FROM ubuntu
+
+ENV TZ=America/Los_Angeles
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get -y update && apt-get -y upgrade
+RUN apt-get install -y python3-numpy
+RUN apt-get install -y python3-opencv
+RUN apt-get install -y mosquitto-clients
+RUN apt-get install -y python3-pip
+RUN pip3 install paho-mqtt
+RUN apt-get install -y libcanberra-gtk-module libcanberra-gtk3-module
+
+COPY cam.py cam.py
