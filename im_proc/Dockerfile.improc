@@ -1,0 +1,12 @@
+FROM ubuntu
+
+RUN apk update
+RUN apk add mosquitto-clients
+RUN apk add py3-paho-mqtt
+
+RUN mkdir im_proc
+COPY . /im_proc
+WORKDIR /im_proc
+
+ENTRYPOINT ["python3"]
+CMD ["im_proc.py"]
