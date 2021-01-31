@@ -11,7 +11,7 @@ def on_connect(client, userdata, flags, rc):
     print('connected with result code {0}'.format(str(rc)))
 
 mclient = mqtt.Client()
-mqttclient.on_connect = on_connect
+mclient.on_connect = on_connect
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 

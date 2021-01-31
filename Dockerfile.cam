@@ -10,4 +10,9 @@ RUN apt-get install -y python3-pip
 RUN pip3 install paho-mqtt
 RUN apt-get install -y libcanberra-gtk-module libcanberra-gtk3-module
 
-COPY cam.py cam.py
+RUN mkdir cam
+COPY . /cam
+WORKDIR /cam
+
+ENTRYPOINT [ "python3" ]
+CMD ["cam.py"]
