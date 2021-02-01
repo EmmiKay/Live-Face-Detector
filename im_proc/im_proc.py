@@ -23,11 +23,11 @@ def on_message(client,userdata, msg):
   except:
     print("Unexpected error:", sys.exc_info()[0])
 
-local_mqttclient = mqtt.Client()
-local_mqttclient.on_connect = on_connect_local
-local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 60)
+mqttclient = mqtt.Client()
+mqttclient.on_connect = on_connect_local
+mqttclient.connect(MQTT_HOST, MQTT_PORT, 60)
 
-local_mqttclient.subscribe(LOCAL_MQTT_TOPIC, qos=2)
-local_mqttclient.on_message = on_message
+mqttclient.subscribe(MQTT_TOPIC, qos=2)
+mqttclient.on_message = on_message
 
-local_mqttclient.loop_forever()
+mqttclient.loop_forever()

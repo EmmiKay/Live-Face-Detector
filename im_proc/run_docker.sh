@@ -6,4 +6,4 @@ docker run --name imgage_proc \
 --network hw03 \
 --rm -ti \
 -v /mnt/mids-251-hw3-eb:/mnt/mids-251-hw3-eb:rw \
-persist_msg:latest
+image_proc
