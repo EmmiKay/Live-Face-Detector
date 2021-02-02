@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 import paho.mqtt.client as mqtt
 import os
+import time
 
 MQTT_BROKER = 'nx_broker'
 MQTT_PORT = 1883
@@ -29,8 +30,7 @@ def main():
             print('face detected', frame.shape, frame.dtype)
             rc, png = cv2.imencode('.png', frame)
             msg = png.tobytes()
-            mqttclient.publish(MQTT_TOPIC, payload = msg, qos = 1, retain = False)
-
+            mqttclient.publish(MQTT_TOPIC, payload = msg, qos = 0, retain = False)
         #display the frame
         cv2.imshow('frame', frame)
 

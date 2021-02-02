@@ -3,7 +3,7 @@ import uuid
 import sys
 
 #MQTT_HOST = '18.221.177.196'
-MQTT_HOST = 'ec2-18-191-197-152.us-east-2.compute.amazonaws.com'
+MQTT_HOST = 'ec2-18-224-93-123.us-east-2.compute.amazonaws.com'
 MQTT_PORT = 1883
 MQTT_TOPIC = 'faces'
 
