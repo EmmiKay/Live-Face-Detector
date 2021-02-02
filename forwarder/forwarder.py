@@ -27,11 +27,8 @@ mqttclient.on_connect = on_connect
 mqttclient.subscribe(MQTT_TOPIC, qos=2)
 mqttclient.on_message = on_message
 
-print('cloud_mqtt_client')
 cloud_mqttclient = mqtt.Client()
-print('cloud_on_connect')
 cloud_mqttclient.on_connect = on_connect_cloud
-print('cloud_connect')
 cloud_mqttclient.connect(CLOUD_MQTT_HOST, CLOUD_MQTT_PORT, 60)
 
 

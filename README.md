@@ -2,7 +2,8 @@
 project for MIDS w251 HW3
 
 ## Order of operations:
-Each of these gets run in a separate terminal window
+Each of these gets run in a separate terminal window. Make sure to set up the
+hw03 network first!
 #### Spin up the broker on the Jetson
 ```
 cd jetson_broker
