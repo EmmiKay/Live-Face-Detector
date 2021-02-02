@@ -5,7 +5,7 @@ import sys
 #MQTT_HOST = '18.221.177.196'
 MQTT_HOST = 'ec2-18-191-197-152.us-east-2.compute.amazonaws.com'
 MQTT_PORT = 1883
-MQTT_TOPIC = 'hw3'
+MQTT_TOPIC = 'faces'
 
 def on_connect_local(client, userdata, flags, rc):
   print("connected to local broker with rc: " + str(rc))
@@ -13,8 +13,7 @@ def on_connect_local(client, userdata, flags, rc):
 def on_message(client,userdata, msg):
   try:
     print("message received!")
-    print("Received message of len:{} bytes from topic:{}".format(len(msg.payload), msg.topic) )
-    # Publishing this message to the cloud broker
+    # sending message to the s3 bucket
     guid = str(uuid.uuid4())
     msg = msg.payload
     file_path = "/mnt/mids-251-hw3-eb/" + "hw03" + guid + ".png"
