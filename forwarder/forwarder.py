@@ -1,8 +1,7 @@
 import paho.mqtt.client as mqtt
 
-MQTT_HOST = 'nx_cam'
+MQTT_HOST = 'nx_broker'
 #MQTT_HOST = '73.101.143.198'
-#MQTT_HOST = 'emily-desktop'
 MQTT_PORT = 1883
 MQTT_TOPIC = "hw3"
 

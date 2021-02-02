@@ -3,7 +3,6 @@ import cv2
 import paho.mqtt.client as mqtt
 
 MQTT_HOST = 'nx_broker'
-
 MQTT_PORT = 1883
 MQTT_TOPIC = 'hw3'
 
