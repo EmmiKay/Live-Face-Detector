@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 import paho.mqtt.client as mqtt
+import os
 
 MQTT_HOST = 'nx_broker'
 MQTT_PORT = 1883
@@ -11,7 +12,6 @@ def on_connect(client, userdata, flags, rc):
 
 mclient = mqtt.Client()
 mclient.on_connect = on_connect
-
 mclient.connect(MQTT_HOST, MQTT_PORT, 60)
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
@@ -29,8 +29,8 @@ while(True):
     for (x,y,w,h) in faces:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
         print('face detected', frame.shape, frame.dtype)
-        rc, jpg = cv.lmencode(*png, frame)
-        msg = jpg.tobytes()
+        rc, png = cv2.imencode('.png', frame)
+        msg = png.tobytes()
         mclient.publish(MQTT_TOPIC, payload = msg, qos = 2, retain = False)
 
     #display the frame
