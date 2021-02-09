@@ -3,7 +3,7 @@ import time
 
 remote_client = mqtt.Client()
 
-remote_client.connect("169.53.167.199",1883,60)
+remote_client.connect("3.137.201.2",1883,60)
 
 def post_face_remote(face):
     try:

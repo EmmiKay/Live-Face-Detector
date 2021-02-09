@@ -3,7 +3,7 @@ import uuid
 import sys
 
 #MQTT_HOST = '18.221.177.196'
-MQTT_HOST = 'ec2-18-224-93-123.us-east-2.compute.amazonaws.com'
+MQTT_HOST = '3.137.201.2'
 MQTT_PORT = 1883
 MQTT_TOPIC = 'hw3'
 

@@ -17,7 +17,7 @@ def on_message(client, userdata, msg):
         print("Unexpected error:", sys.exc_info()[0])
 
 client = mqtt.Client()
-client.connect("cl_broker",1883,20)
+client.connect("3.137.201.2",1883,20)
 client.on_connect = on_connect
 client.on_message = on_message
 
