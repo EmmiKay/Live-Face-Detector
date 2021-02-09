@@ -8,7 +8,7 @@ MQTT_BROKER = 'nx_broker'
 MQTT_PORT = 1883
 MQTT_TOPIC = 'hw3'
 
-def on_connect_local(client, userdata, flags, rc): 
+def on_connect_local(client, userdata, flags, rc):
     print("connected to local broker with rc: " + str(rc))
     main()
 

@@ -2,5 +2,5 @@
 
 xhost +
 docker run --name nx_cam \
---network hw03 \
+--network hw03_local \
 -e DISPLAY --privileged -v /tmp:/tmp --rm -ti detector

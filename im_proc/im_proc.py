@@ -5,7 +5,7 @@ import sys
 #MQTT_HOST = '18.221.177.196'
 MQTT_HOST = 'ec2-18-224-93-123.us-east-2.compute.amazonaws.com'
 MQTT_PORT = 1883
-MQTT_TOPIC = 'faces'
+MQTT_TOPIC = 'hw3'
 
 def on_connect_local(client, userdata, flags, rc):
   print("connected to local broker with rc: " + str(rc))
