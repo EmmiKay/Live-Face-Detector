@@ -9,4 +9,4 @@ COPY . /forwarder
 WORKDIR /forwarder
 
 ENTRYPOINT ["python3"]
-CMD ["forwarder.py"]
+CMD ["forwarder1.py"]

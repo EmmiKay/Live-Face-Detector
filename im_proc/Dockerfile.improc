@@ -26,4 +26,4 @@ COPY . /im_proc
 WORKDIR /im_proc
 
 ENTRYPOINT ["python3"]
-CMD ["im_proc.py"]
+CMD ["im_proc1.py"]
