@@ -1,32 +1,26 @@
 import paho.mqtt.client as mqtt
+import time
 import uuid
 import sys
 
-#MQTT_HOST = '18.221.177.196'
-MQTT_HOST = '3.137.201.2'
-MQTT_PORT = 1883
-MQTT_TOPIC = 'hw3'
 
-def on_connect_local(client, userdata, flags, rc):
-  print("connected to local broker with rc: " + str(rc))
+def on_connect(client, userdata, flags, rc):
+  print("Connected with result code "+str(rc))
+  client.subscribe("hw3", qos=1)
 
-def on_message(client,userdata, msg):
-  try:
-    print("message received!")
-    # sending message to the s3 bucket
-    guid = str(uuid.uuid4())
-    msg = msg.payload
-    file_path = "/mnt/mids-251-hw3-eb/" + "hw03" + guid + ".png"
-    with open(file_path, 'wb') as outfile:
-      outfile.write(msg)
-  except:
-    print("Unexpected error:", sys.exc_info()[0])
+def on_message(client, userdata, msg):
+    filename = str(int(round(time.time() * 1000))) + '.png'
+    print(str(len(msg.payload)))
+    try:
+        f = open('/s3/bucket/' + filename, 'w+b')
+        f.write(msg.payload)
+        f.close()
+    except:
+        print("Unexpected error:", sys.exc_info()[0])
 
-mqttclient = mqtt.Client()
-mqttclient.on_connect = on_connect_local
-mqttclient.connect(MQTT_HOST, MQTT_PORT, 60)
+client = mqtt.Client()
+client.connect("3.137.201.2",1883,20)
+client.on_connect = on_connect
+client.on_message = on_message
 
-mqttclient.subscribe(MQTT_TOPIC, qos=2)
-mqttclient.on_message = on_message
-
-mqttclient.loop_forever()
+client.loop_forever()

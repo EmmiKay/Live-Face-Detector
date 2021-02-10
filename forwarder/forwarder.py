@@ -1,6 +1,5 @@
 import paho.mqtt.client as mqtt
 
-
 LOCAL_MQTT_HOST="nx_broker"
 LOCAL_MQTT_PORT=1883
 LOCAL_MQTT_TOPIC="hw3"
@@ -35,7 +34,4 @@ cloud_mqttclient = mqtt.Client()
 cloud_mqttclient.on_connect = on_connect_cloud
 cloud_mqttclient.connect(CLOUD_MQTT_HOST, CLOUD_MQTT_PORT, 60)
 
-
-
-# go into a loop
 local_mqttclient.loop_forever()

@@ -5,21 +5,23 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get -y update && apt-get -y upgrade
 RUN apt-get install -y mosquitto-clients
 RUN apt-get install -y python3-pip
+RUN apt-get install -y git
 RUN pip3 install paho-mqtt
 
-
-RUN apt-get install automake autotools-dev \
+RUN apt-get install -y automake autotools-dev \
 fuse g++ git libcurl4-gnutls-dev libfuse-dev \
 libssl-dev libxml2-dev make pkg-config
 
-
 RUN git clone https://github.com/s3fs-fuse/s3fs-fuse.git; \
+ echo AKIAIPLPOJTMSTJWWEMA:fan9FXOLwQV2KVHBpMeK+SoAI6FXR1GiALp1bWCa > /etc/passwd-s3fs; \
+ chmod 600 /etc/passwd-s3fs; \
  cd s3fs-fuse; \
  ./autogen.sh; \
  ./configure; \
  make; \
  make install;
 
+RUN mkdir -p /s3/bucket
+
 RUN mkdir im_proc
 COPY . /im_proc
-WORKDIR /im_proc
