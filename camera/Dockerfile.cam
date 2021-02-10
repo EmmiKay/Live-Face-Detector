@@ -15,4 +15,4 @@ COPY . /cam
 WORKDIR /cam
 
 ENTRYPOINT [ "python3" ]
-CMD ["cam1.py"]
+CMD ["cam.py"]

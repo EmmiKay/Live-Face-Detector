@@ -1,49 +1,29 @@
 import numpy as np
-import cv2
-import paho.mqtt.client as mqtt
-import os
+import cv2 as cv
 import time
+import paho.mqtt.client as mqtt
 
-MQTT_BROKER = 'nx_broker'
-MQTT_PORT = 1883
-MQTT_TOPIC = 'hw3'
+cap = cv.VideoCapture(0)
 
-def on_connect_local(client, userdata, flags, rc):
-    print("connected to local broker with rc: " + str(rc))
-    main()
+face_cascade = cv.CascadeClassifier('haarcascade_frontalface_default.xml')
+client = mqtt.Client()
 
-def main():
-    face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+def face(frame):
+    frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(frame_gray, 1.3, 5)
 
-    #could be something other than 0 depending on camera
-    cap = cv2.VideoCapture(0)
+    for (x,y,w,h) in faces:
+        face = frame[y:y+h, x:x+w]
 
-    while(True):
-        #get frame by frame captures
-        ret, frame = cap.read()
+        rc,png = cv.imencode('.png', face)
+        face = png.tobytes()
+        pub_face(face)
 
-        #operations on the frame go here
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-        for (x,y,w,h) in faces:
-            cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
-            print('face detected', frame.shape, frame.dtype)
-            rc, png = cv2.imencode('.png', frame)
-            msg = png.tobytes()
-            mqttclient.publish(MQTT_TOPIC, payload = msg, qos = 0, retain = False)
-        #display the frame
-        cv2.imshow('frame', frame)
+def pub_face(face):
+    client.connect("nx_broker",1883,60)
+    client.publish("hw3", payload=face, qos=1, retain=False);
+    client.disconnect();
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    #release the captures
-    cap.release()
-
-if __name__ == '__main__':
-    mqttclient = mqtt.Client()
-    mqttclient.on_connect = on_connect_local
-    mqttclient.connect(MQTT_BROKER, MQTT_PORT, 60)
-
-    mqttclient.loop_forever()
-    cv2.destroyAllWindows()
+while(True):
+    ret, frame = cap.read()
+    face(frame)

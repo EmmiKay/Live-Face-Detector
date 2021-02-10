@@ -1,39 +1,41 @@
 import paho.mqtt.client as mqtt
 
-MQTT_HOST = 'nx_broker'
-#MQTT_HOST = '73.101.143.198'
-MQTT_PORT = 1883
-MQTT_TOPIC = "hw3"
 
-#CLOUD_MQTT_HOST = '18.221.177.196'
-CLOUD_MQTT_HOST = 'ec2-18-224-93-123.us-east-2.compute.amazonaws.com'
-CLOUD_MQTT_PORT = 1883
-CLOUD_MQTT_TOPIC = 'faces'
+LOCAL_MQTT_HOST="nx_broker"
+LOCAL_MQTT_PORT=1883
+LOCAL_MQTT_TOPIC="hw3"
+
+CLOUD_MQTT_HOST="3.137.201.2"
+CLOUD_MQTT_PORT=1883
+CLOUD_MQTT_TOPIC="hw3"
 
 def on_connect_local(client, userdata, flags, rc):
     print("connected to local broker with rc: " + str(rc))
-    mqttclient.subscribe(MQTT_TOPIC)
 
 def on_connect_cloud(client, userdata, flags, rc):
-        print('connected to cloud')
+    print("connect to cloud broker with rc: " + str(rc))
 
 def on_message(client,userdata, msg):
-    try:
-        print('on message received')
-        msg = msg.payload
-        cloudmqttclient.publish(CLOUD_MQTT_TOPIC, payload=msg, qos=1, retain=True)
-        print('message published!')
-    except:
-        print("Unexpected error:", sys.exc_info()[0])
+  try:
+    print("message received!")
+    print("Received message: len:{} bytes from topic:{}".format(len(msg.payload), msg.topic) )
+    msg = msg.payload
+    cloud_mqttclient.publish(CLOUD_MQTT_TOPIC, payload=msg, qos=1, retain=True)
+  except:
+    print("Unexpected error:", sys.exc_info()[0])
 
-mqttclient = mqtt.Client()
-mqttclient.connect(MQTT_HOST, MQTT_PORT, 60)
-mqttclient.on_connect = on_connect_local
+local_mqttclient = mqtt.Client()
+local_mqttclient.on_connect = on_connect_local
+local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 60)
+
+local_mqttclient.subscribe(LOCAL_MQTT_TOPIC, qos=2)
+local_mqttclient.on_message = on_message
 
 cloud_mqttclient = mqtt.Client()
-cloud_mqttclient.connect(CLOUD_MQTT_HOST, CLOUD_MQTT_PORT, 60)
 cloud_mqttclient.on_connect = on_connect_cloud
+cloud_mqttclient.connect(CLOUD_MQTT_HOST, CLOUD_MQTT_PORT, 60)
 
-mqttclient.on_message = on_message
 
-mqttclient.loop_forever()
+
+# go into a loop
+local_mqttclient.loop_forever()
