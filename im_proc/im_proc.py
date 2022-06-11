@@ -5,10 +5,12 @@ import sys
 
 
 def on_connect(client, userdata, flags, rc):
-  print("Connected with result code "+str(rc))
-  client.subscribe("hw3", qos=1)
+    '''connect and subscribe to client'''
+    print("Connected with result code "+str(rc))
+    client.subscribe("hw3", qos=1)
 
 def on_message(client, userdata, msg):
+    '''save received message (face image) to S3 bucket'''
     filename = str(int(round(time.time() * 1000))) + '.png'
     print(str(len(msg.payload)))
     try:

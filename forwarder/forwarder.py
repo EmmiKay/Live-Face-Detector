@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 
+#set client variables
 LOCAL_MQTT_HOST="nx_broker"
 LOCAL_MQTT_PORT=1883
 LOCAL_MQTT_TOPIC="hw3"
