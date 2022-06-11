@@ -1,5 +1,7 @@
-# 251_HW3
-project for MIDS w251 HW3
+# Live Face Detector
+Built on the Jetson Xavier NX
+
+This project was built as a mostly unguided project for the UC Berkeley Masters in Information and Data Science. The project was practice in using trained models running remotely on an IoT device to detect faces. A camera was plugged into the Jetson which would recognize faces, clip them from the video feed, and drop them into an Amazon S3 bucket.
 
 ## Order of operations:
 Each of these gets run in a separate terminal window. Make sure to set up the
